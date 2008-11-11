@@ -1,13 +1,14 @@
-CC = "g++"
-DBG = "-g"
+CC = g++
+DBG = -g
+LIB_NAME = liboptionpp.a
 
 
 all : lib
 
-lib : liboptionpp.a
+lib : $(LIB_NAME)
 
 liboptionpp.a : compile
-	ar r liboptionpp.a *.o
+	ar r $(LIB_NAME) *.o
 
 compile : configuration.o usage.o
 
@@ -17,6 +18,6 @@ compile : configuration.o usage.o
 clean :
 	rm -f *.o
 
-clobber :
-	rm -f liboptionpp.a
+clobber : clean
+	rm -f $(LIB_NAME)
 
