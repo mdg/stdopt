@@ -18,6 +18,8 @@
 #include <sstream>
 #include <cstring>
 
+using namespace stdopt;
+
 
 usage_option_c::usage_option_c( bool param_expected, char short_option
 		, const std::string &long_option

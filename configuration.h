@@ -19,6 +19,8 @@
 #include <map>
 #include <vector>
 
+namespace stdopt {
+
 
 /**
  * Config option interface.  It hides the type of the various
@@ -251,6 +253,8 @@ private:
 	bool m_error;
 };
 
+
+} // end namespace
 
 #endif
 

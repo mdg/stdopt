@@ -18,6 +18,8 @@
 #include <list>
 #include <string>
 
+namespace stdopt {
+
 
 /**
  * An option class for command line usage.
@@ -141,6 +143,8 @@ private:
 	usage_option_c::list m_option;
 };
 
+
+} // end namespace
 
 #endif
 

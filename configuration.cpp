@@ -16,6 +16,8 @@
 #include "configuration.h"
 #include <iostream>
 
+using namespace stdopt;
+
 
 configuration_c::configuration_c()
 : m_option()
