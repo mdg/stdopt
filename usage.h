@@ -31,6 +31,9 @@ public:
 	 * List of usage option objects.
 	 */
 	typedef std::list< usage_option_c * > list;
+	typedef std::list< usage_option_c * >::iterator list_iterator;
+	typedef std::list< usage_option_c * >::const_iterator
+		const_list_iterator;
 
 public:
 	/**
@@ -108,6 +111,8 @@ private:
  */
 class usage_c
 {
+	friend class usage_doc_c;
+
 public:
 	/**
 	 * Construct an empty arg parser
@@ -125,11 +130,6 @@ public:
 	 */
 	bool parse_args( int argc, const char **argv );
 
-	/**
-	 * Build a usage document for all options.
-	 */
-	void write_usage_doc( std::ostream & ) const;
-
 private:
 	/**
 	 * search for an option given a short style character
@@ -141,6 +141,23 @@ private:
 	usage_option_c * find_long_option( const std::string &long_opt );
 
 	usage_option_c::list m_option;
+};
+
+
+/**
+ * Class for formating usage options into a usable online document.
+ * Consider modifying it to write a man page as well.
+ */
+class usage_doc_c
+{
+public:
+	/**
+	 * Build a usage document for all options.
+	 * This should be a separate class.
+	 */
+	void write( const usage_c &, std::ostream & ) const;
+
+private:
 };
 
 

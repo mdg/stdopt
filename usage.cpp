@@ -118,17 +118,6 @@ bool usage_c::parse_args( int argc, const char **argv )
 	return true;
 }
 
-void usage_c::write_usage_doc( std::ostream &doc ) const
-{
-	doc << "Usage: shessiond [OPTIONS]\n\n";
-	doc << "Options:\n";
-	usage_option_c::list::const_iterator it;
-	for ( it=m_option.begin(); it!=m_option.end(); ++it ) {
-		(*it)->write_usage_doc( doc );
-	}
-	doc << "\n";
-}
-
 usage_option_c * usage_c::find_short_option( char short_opt )
 {
 	usage_option_c::list::iterator it;
@@ -151,5 +140,16 @@ usage_option_c * usage_c::find_long_option( const std::string &long_opt )
 		}
 	}
 	return NULL;
+}
+
+void usage_doc_c::write( const usage_c &usage, std::ostream &doc ) const
+{
+	doc << "Usage: shessiond [OPTIONS]\n\n";
+	doc << "Options:\n";
+	usage_option_c::list::const_iterator it;
+	for ( it=usage.m_option.begin(); it!=usage.m_option.end(); ++it ) {
+		(*it)->write_usage_doc( doc );
+	}
+	doc << "\n";
 }
 
