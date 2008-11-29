@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-#include "configuration.h"
+#include "stdopt/configuration.h"
 #include <iostream>
 
 using namespace stdopt;

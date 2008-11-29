@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-#include "../usage.h"
+#include "stdopt/usage.h"
 #include <testpp/test.h>
 #include <sstream>
 

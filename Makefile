@@ -2,6 +2,7 @@ CC = g++
 DBG = -g
 LIB_NAME = liboptionpp.a
 
+INC_OPT = -Iinclude
 SRC = *.h *.cpp
 
 
@@ -9,13 +10,10 @@ all : lib
 
 lib : $(LIB_NAME)
 
-$(LIB_NAME) : compile $(SRC)
+$(LIB_NAME) : compile
 	ar r $(LIB_NAME) *.o
 
-compile : configuration.o usage.o
-
-.o : $.cpp $.h
-	$(CC) $(DBG) $.cpp
+compile : obj/configuration.o obj/usage.o
 
 clean :
 	rm -f *.o test/*.o
@@ -30,14 +28,27 @@ install : lib
 	cp $(LIB_NAME) /usr/lib
 
 test : compile compile_test
-	$(CC) $(DBG) -o run_stdopt_tests *.o test/*.o -ltestpp
+	$(CC) $(DBG) -o run_stdopt_tests obj/*.o obj/test/*.o -ltestpp
 
 compile_test : test/configuration_test.o test/usage_test.o
 
+obj :
+	mkdir -p obj
 
-test/configuration_test.o : configuration.h test/configuration_test.cpp
-	$(CC) $(DBG) -c -o test/configuration_test.o test/configuration_test.cpp
+obj/test :
+	mkdir -p obj/test
 
-test/usage_test.o : usage.h test/usage_test.cpp
-	$(CC) $(DBG) -c -o test/usage_test.o test/usage_test.cpp
+obj/configuration.o : obj include/stdopt/configuration.h configuration.cpp
+	$(CC) $(DBG) $(INC_OPT) -c -o obj/configuration.o configuration.cpp
+
+obj/usage.o : obj include/stdopt/usage.h usage.cpp
+	$(CC) $(DBG) $(INC_OPT) -c -o obj/usage.o usage.cpp
+
+test/configuration_test.o : obj/test include/stdopt/configuration.h \
+	test/configuration_test.cpp
+	$(CC) $(DBG) $(INC_OPT) -c -o obj/test/configuration_test.o \
+		test/configuration_test.cpp
+
+test/usage_test.o : obj/test include/stdopt/usage.h test/usage_test.cpp
+	$(CC) $(DBG) $(INC_OPT) -c -o obj/test/usage_test.o test/usage_test.cpp
 

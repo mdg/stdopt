@@ -13,11 +13,10 @@
  * limitations under the License.
  */
 
-
+#include "stdopt/configuration.h"
 #include <testpp/test.h>
 #include <sstream>
 #include <fstream>
-#include "../configuration.h"
 
 using namespace stdopt;
 
