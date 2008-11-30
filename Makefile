@@ -11,12 +11,12 @@ all : lib
 lib : $(LIB_NAME)
 
 $(LIB_NAME) : compile
-	ar r $(LIB_NAME) *.o
+	ar r $(LIB_NAME) obj/*.o
 
 compile : obj/configuration.o obj/usage.o
 
 clean :
-	rm -f *.o test/*.o
+	rm -f obj/*.o obj/test/*.o
 
 clobber : clean
 	rm -f $(LIB_NAME)
