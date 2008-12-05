@@ -1,0 +1,5 @@
+
+unify the option and option value types
+
+separate usage_option_c and the option value that's set
+
