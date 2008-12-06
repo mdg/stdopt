@@ -30,6 +30,7 @@ class usage_option_spec_i
 public:
 	virtual char option_character() const = 0;
 	virtual const std::string & option_name() const = 0;
+	virtual const std::string & description() const = 0;
 
 	virtual bool param_required() const = 0;
 	virtual bool param_optional() const = 0;
@@ -42,6 +43,9 @@ class config_option_spec_i
 {
 public:
 	virtual const std::string & option_name() const = 0;
+	virtual const std::string & description() const = 0;
+
+	virtual bool config_required() const = 0;
 };
 
 /**
@@ -49,7 +53,9 @@ public:
  * options so the configuration class can parse all options
  * without having to know about their type.
  */
-class option_spec_i
+class shared_option_spec_i
+: virtual public usage_option_spec_i
+, virtual public config_option_spec_i
 {
 public:
 	/**
@@ -60,7 +66,7 @@ public:
 	/**
 	 * Get the name of this option.
 	 */
-	virtual const std::string & name() const = 0;
+	virtual const std::string & option_name() const = 0;
 
 	/**
 	 * Get the description for this option.
