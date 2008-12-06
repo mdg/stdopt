@@ -23,9 +23,32 @@ namespace stdopt {
 
 
 /**
+ * Interface for storing the option value.
+ */
+class option_value_i
+{
+public:
+	/**
+	 * Virtual parser
+	 */
+	virtual bool parse_value( const std::string & ) = 0;
+
+	/**
+	 * Check if this option was set _correctly_ in the configuration file.
+	 * It returns false if there was an error.
+	 */
+	virtual bool set() const = 0;
+	/**
+	 * Check if this option was set incorrectly in the configuration file.
+	 */
+	virtual bool error() const = 0;
+};
+
+/**
  * Usage option specification.
  */
-class usage_option_spec_i
+class usage_option_i
+: virtual public option_value_i
 {
 public:
 	virtual char option_character() const = 0;
@@ -39,7 +62,8 @@ public:
 /**
  * Config option specification.
  */
-class config_option_spec_i
+class config_option_i
+: virtual public option_value_i
 {
 public:
 	virtual const std::string & option_name() const = 0;
@@ -53,48 +77,15 @@ public:
  * options so the configuration class can parse all options
  * without having to know about their type.
  */
-class shared_option_spec_i
-: virtual public usage_option_spec_i
-, virtual public config_option_spec_i
+class shared_option_i
+: virtual public usage_option_i
+, virtual public config_option_i
 {
 public:
 	/**
 	 * Empty virtual destructor
 	 */
-	virtual ~option_spec_i() {}
-
-	/**
-	 * Get the name of this option.
-	 */
-	virtual const std::string & option_name() const = 0;
-
-	/**
-	 * Get the description for this option.
-	 */
-	virtual const std::string & description() const = 0;
-
-};
-
-/**
- * Interface for storing the option value.
- */
-class option_value_i
-{
-public:
-	/**
-	 * Virtual parser
-	 */
-	virtual bool parse( const std::string & ) = 0;
-
-	/**
-	 * Check if this option was set _correctly_ in the configuration file.
-	 * It returns false if there was an error.
-	 */
-	virtual bool set() const = 0;
-	/**
-	 * Check if this option was set incorrectly in the configuration file.
-	 */
-	virtual bool error() const = 0;
+	virtual ~shared_option_i() {}
 };
 
 
