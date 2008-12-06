@@ -86,6 +86,9 @@ class option_value_c
 : virtual public option_value_i
 {
 public:
+	option_value_c();
+	option_value_c( const T &default_value );
+
 	/**
 	 * Check if this option was set _correctly_ in the configuration file.
 	 * It returns false if there was an error.
@@ -163,7 +166,27 @@ class config_option_c
 , public option_value_c< T >
 {
 public:
-	config_option_c();
+	/**
+	 * Construct the config option.  The name is the key in the
+	 * configuration file.
+	 */
+	config_option_c( const std::string &name, const std::string &desc )
+	: option_value_c()
+	, m_option_name( name )
+	, m_description( desc )
+	, m_config_required( false )
+	{}
+
+	/**
+	 * Construct the config option with a default value.  The name
+	 * is the key in the configuration file.
+	 */
+	config_option_c( const T &default_value, const std::string &name, const std::string &desc )
+	: option_value_c( default_value )
+	, m_option_name( name )
+	, m_description( desc )
+	, m_config_required( false )
+	{}
 
 	virtual const std::string & option_name() const { return m_option_name; }
 	virtual const std::string & description() const { return m_description; }
