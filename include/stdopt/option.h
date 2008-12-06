@@ -202,6 +202,9 @@ private:
 
 template < typename T >
 class shared_option_c
+: virtual public config_option_i
+, virtual public usage_option_i
+, public option_value_c< T >
 {
 public:
 	shared_option_c();
