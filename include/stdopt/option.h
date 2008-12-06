@@ -44,6 +44,7 @@ public:
 	virtual bool error() const = 0;
 };
 
+
 /**
  * Usage option specification.
  */
@@ -56,7 +57,18 @@ public:
 	virtual const std::string & description() const = 0;
 
 	virtual bool requires_param() const = 0;
+
+
+	/**
+	 * Check if an option type takes a parameter.
+	 */
+	template < typename T >
+	static bool type_requires_param();
 };
+
+template < bool >
+bool usage_option_i::type_requires_param< bool >();
+
 
 /**
  * Config option specification.
@@ -172,7 +184,7 @@ public:
 	virtual const std::string & option_name() const { return m_option_name; }
 	virtual const std::string & description() const { return m_description; }
 
-	virtual bool requires_param() const { return m_requires_param; }
+	virtual bool requires_param() const { return usage_option_i::type_requires_param< T >(); }
 
 private:
 	std::string m_option_name;
