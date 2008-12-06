@@ -55,8 +55,7 @@ public:
 	virtual const std::string & option_name() const = 0;
 	virtual const std::string & description() const = 0;
 
-	virtual bool param_required() const = 0;
-	virtual bool param_optional() const = 0;
+	virtual bool requires_param() const = 0;
 };
 
 /**
@@ -93,7 +92,129 @@ TESTPP( test_usage )
 {
 	stdopt::option_c< int > ls_files( "ls-files"
 			, "List the files included in this test." );
+	stdopt::config_option_c< int > ls_files( "ls-files"
+			, "List the files included in this test." );
 }
+
+
+template < typename T >
+class option_value_c
+: virtual public option_value_i
+{
+public:
+	/**
+	 * Check if this option was set _correctly_ in the configuration file.
+	 * It returns false if there was an error.
+	 */
+	virtual bool set() const;
+
+	/**
+	 * Check if this option was set incorrectly in the configuration file.
+	 */
+	virtual bool error() const;
+
+	/**
+	 * Get the value set.  If the value is set multiple times
+	 * this will return the first value.
+	 */
+	const T & value() const;
+	/**
+	 * If the value is set multiple times, this will return the
+	 * most recently set value.
+	 */
+	const T & last_value() const;
+
+	int num_values() const;
+	const T & value( int i ) const;
+
+	/**
+	 * Virtual parser
+	 */
+	virtual bool parse_value( const std::string &str_value )
+	{
+		// don't keep parsing after an error
+		if ( m_error )
+			return false;
+
+		std::istringstream input( str_value );
+		T val();
+		input >> val;
+		m_error = input.fail();
+		m_set = ! m_error;
+		m_values.push_back( val );
+		return ! m_error;
+	}
+
+private:
+	std::vector< T > m_values;
+	bool m_set;
+	bool m_error;
+};
+
+template < typename T >
+class usage_option_c
+: virtual public usage_option_i
+, public option_value_c< T >
+{
+public:
+	usage_option_c();
+
+	virtual char option_character() const { return m_option_char; }
+	virtual const std::string & option_name() const { return m_option_name; }
+	virtual const std::string & description() const { return m_description; }
+
+	virtual bool requires_param() const { return m_requires_param; }
+
+private:
+	std::string m_option_name;
+	std::string m_description;
+
+	char m_option_char;
+	bool m_requires_param;
+};
+
+template < typename T >
+class config_option_c
+: virtual public config_option_i
+, public option_value_c< T >
+{
+public:
+	config_option_c();
+
+	virtual const std::string & option_name() const { return m_option_name; }
+	virtual const std::string & description() const { return m_description; }
+
+	virtual bool config_required() const { return m_config_required; }
+
+private:
+	std::string m_option_name;
+	std::string m_description;
+
+	bool m_config_required;
+};
+
+template < typename T >
+class shared_option_c
+{
+public:
+	shared_option_c();
+
+	virtual char option_character() const { return m_option_char; }
+	virtual const std::string & option_name() const { return m_option_name; }
+	virtual const std::string & description() const { return m_description; }
+
+	virtual bool requires_param() const { return m_requires_param; }
+	virtual bool config_required() const { return m_config_required; }
+
+private:
+	std::string m_option_name;
+	std::string m_description;
+
+	char m_option_char;
+	bool m_requires_param;
+	bool m_config_required;
+};
+
 
 /**
  * Templated implementation of the config_option_i interface.
