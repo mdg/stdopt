@@ -144,7 +144,29 @@ class usage_option_c
 , virtual public usage_option_i
 {
 public:
-	usage_option_c();
+	/**
+	 * Construct the config option.  The name is the key in the
+	 * configuration file.
+	 */
+	usage_option_c( char short_opt, const std::string &name, const std::string &desc )
+	: option_value_c()
+	, m_option_name( name )
+	, m_description( desc )
+	, m_option_char( short_opt )
+	, m_requires_param( false )
+	{}
+
+	/**
+	 * Construct the config option with a default value.  The name
+	 * is the key in the configuration file.
+	 */
+	usage_option_c( const T &default_value, char short_opt, const std::string &name, const std::string &desc )
+	: option_value_c( default_value )
+	, m_option_name( name )
+	, m_description( desc )
+	, m_option_char( short_opt )
+	{}
+
 
 	virtual char option_character() const { return m_option_char; }
 	virtual const std::string & option_name() const { return m_option_name; }
