@@ -71,22 +71,6 @@ public:
 	virtual bool config_required() const = 0;
 };
 
-/**
- * Interface for an option specification.  It hides the type of the various
- * options so the configuration class can parse all options
- * without having to know about their type.
- */
-class shared_option_i
-: virtual public usage_option_i
-, virtual public config_option_i
-{
-public:
-	/**
-	 * Empty virtual destructor
-	 */
-	virtual ~shared_option_i() {}
-};
-
 
 TESTPP( test_usage )
 {
