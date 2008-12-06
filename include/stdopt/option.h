@@ -140,8 +140,8 @@ private:
 
 template < typename T >
 class usage_option_c
-: virtual public usage_option_i
-, public option_value_c< T >
+: public option_value_c< T >
+, virtual public usage_option_i
 {
 public:
 	usage_option_c();
@@ -162,8 +162,8 @@ private:
 
 template < typename T >
 class config_option_c
-: virtual public config_option_i
-, public option_value_c< T >
+: public option_value_c< T >
+, virtual public config_option_i
 {
 public:
 	/**
@@ -202,9 +202,9 @@ private:
 
 template < typename T >
 class shared_option_c
-: virtual public config_option_i
+: public option_value_c< T >
+, virtual public config_option_i
 , virtual public usage_option_i
-, public option_value_c< T >
 {
 public:
 	shared_option_c();
