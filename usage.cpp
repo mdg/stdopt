@@ -52,6 +52,7 @@ void usage_option_c::set( const std::string &param )
 	m_param = param;
 }
 
+/*
 void usage_option_c::write_usage_doc( std::ostream &doc ) const
 {
 	if ( m_short_opt ) {
@@ -68,6 +69,7 @@ void usage_option_c::write_usage_doc( std::ostream &doc ) const
 
 	doc << std::endl;
 }
+*/
 
 
 
@@ -142,6 +144,7 @@ usage_option_c * usage_c::find_long_option( const std::string &long_opt )
 	return NULL;
 }
 
+/*
 void usage_doc_c::write( const usage_c &usage, std::ostream &doc ) const
 {
 	doc << "Usage: shessiond [OPTIONS]\n\n";
@@ -152,4 +155,5 @@ void usage_doc_c::write( const usage_c &usage, std::ostream &doc ) const
 	}
 	doc << "\n";
 }
+*/
 
