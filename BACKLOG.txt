@@ -1,5 +1,7 @@
 
 unify the option and option value types
 
+update the docs to match unification.
+
 separate usage_option_c and the option value that's set
 
