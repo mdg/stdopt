@@ -30,7 +30,7 @@ install : lib
 test : compile compile_test
 	$(CC) $(DBG) -o run_stdopt_tests obj/*.o obj/test/*.o -ltestpp
 
-compile_test : test/configuration_test.o test/usage_test.o
+compile_test : test/configuration_test.o test/option.o test/usage_test.o
 
 obj :
 	mkdir -p obj
@@ -44,11 +44,16 @@ obj/configuration.o : obj include/stdopt/configuration.h configuration.cpp
 obj/usage.o : obj include/stdopt/usage.h usage.cpp
 	$(CC) $(DBG) $(INC_OPT) -c -o obj/usage.o usage.cpp
 
-test/configuration_test.o : obj/test include/stdopt/configuration.h \
-	test/configuration_test.cpp
+obj/test/configuration_test.o : obj/test include/stdopt/configuration.h \
+	test/configuration_test.cpp include/stdopt/option.h
 	$(CC) $(DBG) $(INC_OPT) -c -o obj/test/configuration_test.o \
 		test/configuration_test.cpp
 
-test/usage_test.o : obj/test include/stdopt/usage.h test/usage_test.cpp
+obj/test/option_test.o : obj/test include/stdopt/option.h \
+	test/option_test.cpp
+	$(CC) $(DBG) $(INC_OPT) -c -o obj/test/option_test.o \
+		test/option_test.cpp
+
+obj/test/usage_test.o : obj/test include/stdopt/usage.h test/usage_test.cpp
 	$(CC) $(DBG) $(INC_OPT) -c -o obj/test/usage_test.o test/usage_test.cpp
 
