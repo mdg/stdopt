@@ -189,6 +189,7 @@ public:
 	 * Get the number of values set for this option.
 	 */
 	int size() const { return m_values.size(); }
+
 	/**
 	 * Get the ith value set for this option.
 	 */
