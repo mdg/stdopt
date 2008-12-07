@@ -90,3 +90,31 @@ TESTPP( test_option_value_parse_multiple_values )
 	assertpp( *(it++) ) == 22;
 }
 
+/**
+ * Test behavior when parsing invalid values.
+ */
+TESTPP( test_option_value_parse_invalid_value )
+{
+	option_value_c< int > num;
+
+	num.parse_value( "dog" );
+
+	assertpp( num.set() ).f();
+	assertpp( num.error() ).t();
+}
+
+/**
+ * Test behavior when parsing an invalid value after already having parsed
+ * valid values.
+ */
+TESTPP( test_option_value_parse_invalid_value_after_valid )
+{
+	option_value_c< int > num;
+
+	num.parse_value( "37" );
+	num.parse_value( "dog" );
+
+	assertpp( num.set() ).f();
+	assertpp( num.error() ).t();
+}
+
