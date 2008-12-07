@@ -26,7 +26,7 @@ using namespace stdopt;
 TESTPP( test_short_usage )
 {
 	usage_c usage;
-	usage_option_c debug( false, 'g', "debug", "Add debugging logging." );
+	usage_option_c< bool > debug( 'g', "debug", "Add debugging logging." );
 	usage.add( debug );
 
 	static const int argc( 2 );
@@ -34,7 +34,7 @@ TESTPP( test_short_usage )
 
 	usage.parse_args( argc, argv );
 
-	assertpp( debug.is_set() ).t();
+	assertpp( debug.set() ).t();
 }
 
 /**
@@ -43,7 +43,7 @@ TESTPP( test_short_usage )
 TESTPP( test_long_usage )
 {
 	usage_c usage;
-	usage_option_c debug( false, 'g', "debug", "Add debugging options." );
+	usage_option_c< bool > debug( 'g', "debug", "Add debugging options." );
 	usage.add( debug );
 
 	static const int argc( 2 );
@@ -51,7 +51,7 @@ TESTPP( test_long_usage )
 
 	usage.parse_args( argc, argv );
 
-	assertpp( debug.is_set() ).t();
+	assertpp( debug.set() ).t();
 }
 
 /**
@@ -59,7 +59,7 @@ TESTPP( test_long_usage )
  */
 TESTPP( test_option_doc )
 {
-	usage_option_c debug( false, 'g', "debug", "Write debugging logging." );
+	usage_option_c< bool > debug( 'g', "debug", "Write debugging logging." );
 	std::ostringstream doc;
 	debug.write_usage_doc( doc );
 
