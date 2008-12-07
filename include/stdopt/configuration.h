@@ -1,5 +1,5 @@
-#ifndef CONFIGURATION_H
-#define CONFIGURATION_H
+#ifndef STDOPT_CONFIGURATION_H
+#define STDOPT_CONFIGURATION_H
 /**
  * Copyright 2008 Matthew Graham
  * Licensed under the Apache License, Version 2.0 (the "License");
