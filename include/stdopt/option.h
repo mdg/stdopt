@@ -232,67 +232,6 @@ private:
 
 
 /**
- * An option to be set in the configuration file.
- */
-template < typename T >
-class config_option_c
-: public option_value_c< T >
-, virtual public config_option_i
-{
-public:
-	/**
-	 * Construct the config option.  The name is the key in the
-	 * configuration file.
-	 */
-	config_option_c( const std::string &name, const std::string &desc )
-	: option_value_c< T >()
-	, m_option_name( name )
-	, m_description( desc )
-	, m_config_required( false )
-	{}
-
-	/**
-	 * Construct the config option with a default value.  The name
-	 * is the key in the configuration file.
-	 */
-	config_option_c( const T &default_value, const std::string &name
-			, const std::string &desc )
-	: option_value_c< T >( default_value )
-	, m_option_name( name )
-	, m_description( desc )
-	, m_config_required( false )
-	{}
-
-	/**
-	 * Get the name for this option.
-	 */
-	virtual const std::string & option_name() const
-	{
-		return m_option_name;
-	}
-
-	/**
-	 * Get the description documentation for this option.
-	 */
-	virtual const std::string & description() const
-	{
-		return m_description;
-	}
-
-	/**
-	 * Check if it's required that this value be set in the configuration.
-	 */
-	virtual bool config_required() const { return m_config_required; }
-
-private:
-	std::string m_option_name;
-	std::string m_description;
-
-	bool m_config_required;
-};
-
-
-/**
  * An option that can be set on command line usage or a configuration file.
  */
 template < typename T >
