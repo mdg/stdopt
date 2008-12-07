@@ -14,7 +14,6 @@
  */
 
 #include "stdopt/configuration.h"
-#include <iostream>
 
 using namespace stdopt;
 
@@ -27,7 +26,7 @@ configuration_c::configuration_c()
 
 void configuration_c::add( config_option_i &option )
 {
-	m_option[ option.name() ] = &option;
+	m_option[ option.option_name() ] = &option;
 }
 
 void configuration_c::parse( std::istream &input )
@@ -64,14 +63,14 @@ void configuration_c::parse( std::istream &input )
 			option_map::iterator it( m_option.find( key ) );
 
 			if ( it == m_option.end() ) {
-				std::cerr << "error";
+				// std::cerr << "error";
 				return;
 			}
 			if ( value[ value.length() - 1 ] == '\r' ) {
 				value.erase( value.length() - 1 );
 			}
 
-			it->second->parse( value );
+			it->second->parse_value( value );
 			if ( it->second->error() ) {
 				m_error = true;
 				return;
