@@ -28,10 +28,10 @@ using namespace stdopt;
  */
 TESTPP( test_config_option_initialization )
 {
-	config_option_c< std::string > opt( "dog" );
+	config_option_c< std::string > opt( "dog", "description of a dog" );
 
 	// assert preconditions
-	assertpp( opt.name() ) == "dog";
+	assertpp( opt.option_name() ) == "dog";
 	assertpp( opt.set() ).f();
 	assertpp( opt.error() ).f();
 }
@@ -43,10 +43,10 @@ TESTPP( test_config_option_initialization )
  */
 TESTPP( test_config_option_default_init )
 {
-	config_option_c< int > opt( "dog", 58 );
+	config_option_c< int > opt( 58, "dog", "description of a dog" );
 
 	// assert preconditions
-	assertpp( opt.name() ) == "dog";
+	assertpp( opt.option_name() ) == "dog";
 	assertpp( opt.value() ) == 58;
 	assertpp( opt.set() ).t();
 	assertpp( opt.error() ).f();
