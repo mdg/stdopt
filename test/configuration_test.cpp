@@ -16,7 +16,6 @@
 #include "stdopt/configuration.h"
 #include <testpp/test.h>
 #include <sstream>
-#include <fstream>
 
 using namespace stdopt;
 
