@@ -160,7 +160,7 @@ public:
 	 * Check if this option was set _correctly_ in the configuration file.
 	 * It returns false if there was an error.
 	 */
-	virtual bool set() const { return m_set; }
+	virtual bool set() const { return m_set && ! m_error; }
 
 	/**
 	 * Check if this option was set incorrectly in the configuration file.
