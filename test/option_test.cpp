@@ -45,3 +45,40 @@ TESTPP( test_option_value_constructor )
 	assertpp( value.size() ) == 0;
 }
 
+/**
+ * Test the parse value function in expected operation.
+ */
+TESTPP( test_option_value_parse_value )
+{
+	option_value_c< int > value;
+
+	value.parse_value( "45" );
+
+	assertpp( value.value() ) == 45;
+	assertpp( value.last_value() ) == 45;
+}
+
+/**
+ * Test the pars value function when called multiple times.
+ */
+TESTPP( test_option_value_parse_multiple_values )
+{
+	option_value_c< int > num;
+
+	num.parse_value( "50" );
+	num.parse_value( "24" );
+	num.parse_value( "22" );
+
+	assertpp( num.value() ) == 50;
+	assertpp( num.last_value() ) == 22;
+
+	assertpp( num.value( 0 ) ) == 50;
+	assertpp( num.value( 1 ) ) == 24;
+	assertpp( num.value( 2 ) ) == 22;
+
+	option_value_c< int >::iterator it( num.begin() );
+	assertpp( *(it++) ) == 50;
+	assertpp( *(it++) ) == 24;
+	assertpp( *(it++) ) == 22;
+}
+
