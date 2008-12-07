@@ -1,6 +1,8 @@
 
 unify the option and option value types
 
+set the option_value_c class to handle defaults correctly.
+
 update the docs to match unification.
 
 separate usage_option_c and the option value that's set
