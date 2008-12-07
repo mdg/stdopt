@@ -13,7 +13,7 @@ lib : $(LIB_NAME)
 $(LIB_NAME) : compile
 	ar r $(LIB_NAME) obj/*.o
 
-compile : obj/configuration.o obj/usage.o
+compile : obj/configuration.o obj/option.o obj/usage.o
 
 clean :
 	rm -f obj/*.o obj/test/*.o
@@ -30,7 +30,8 @@ install : lib
 test : compile compile_test
 	$(CC) $(DBG) -o run_stdopt_tests obj/*.o obj/test/*.o -ltestpp
 
-compile_test : test/configuration_test.o test/option.o test/usage_test.o
+compile_test : obj/test/configuration_test.o obj/test/option_test.o \
+	obj/test/usage_test.o
 
 obj :
 	mkdir -p obj
@@ -41,7 +42,10 @@ obj/test :
 obj/configuration.o : obj include/stdopt/configuration.h configuration.cpp
 	$(CC) $(DBG) $(INC_OPT) -c -o obj/configuration.o configuration.cpp
 
-obj/usage.o : obj include/stdopt/usage.h usage.cpp
+obj/option.o : obj include/stdopt/option.h option.cpp
+	$(CC) $(DBG) $(INC_OPT) -c -o obj/option.o option.cpp
+
+obj/usage.o : obj include/stdopt/usage.h usage.cpp include/stdopt/option.h
 	$(CC) $(DBG) $(INC_OPT) -c -o obj/usage.o usage.cpp
 
 obj/test/configuration_test.o : obj/test include/stdopt/configuration.h \
