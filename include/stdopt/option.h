@@ -329,12 +329,18 @@ public:
 	/**
 	 * Get the name for this option.
 	 */
-	virtual const std::string & option_name() const { return m_option_name; }
+	virtual const std::string & option_name() const
+	{
+		return m_option_name;
+	}
 
 	/**
 	 * Get the description documentation for this option.
 	 */
-	virtual const std::string & description() const { return m_description; }
+	virtual const std::string & description() const
+	{
+		return m_description;
+	}
 
 	/**
 	 * Check if it's required that this value be set in the configuration.
