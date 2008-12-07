@@ -30,13 +30,3 @@ TESTPP( test_type_requires_param )
 	assertpp( usage_option_i::type_requires_param< std::string >() ).t();
 }
 
-TESTPP( test_option_usage )
-{
-	/*
-	stdopt::option_c< int > ls_files( "ls-files"
-			, "List the files included in this test." );
-	stdopt::config_option_c< int > ls_files( "ls-files"
-			, "List the files included in this test." );
-			*/
-}
-
