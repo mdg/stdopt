@@ -21,37 +21,6 @@
 using namespace stdopt;
 
 
-usage_option_c::usage_option_c( bool param_expected, char short_option
-		, const std::string &long_option
-		, const std::string &description )
-: m_param_expected( param_expected )
-, m_short_opt( short_option )
-, m_long_opt( long_option )
-, m_description( description )
-, m_usage_error( false )
-, m_set( false )
-, m_param()
-{}
-
-void usage_option_c::set()
-{
-	if ( param_expected() ) {
-		m_usage_error = true;
-		return;
-	}
-	m_set = true;
-}
-
-void usage_option_c::set( const std::string &param )
-{
-	if ( ! param_expected() ) {
-		m_usage_error = true;
-		return;
-	}
-	m_set = true;
-	m_param = param;
-}
-
 /*
 void usage_option_c::write_usage_doc( std::ostream &doc ) const
 {
