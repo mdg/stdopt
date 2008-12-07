@@ -54,6 +54,10 @@ TESTPP( test_option_value_parse_value )
 
 	value.parse_value( "45" );
 
+	assertpp( value.set() ).t();
+	assertpp( value.error() ).f();
+	assertpp( value.size() ) == 1;
+
 	assertpp( value.value() ) == 45;
 	assertpp( value.last_value() ) == 45;
 }
@@ -68,6 +72,10 @@ TESTPP( test_option_value_parse_multiple_values )
 	num.parse_value( "50" );
 	num.parse_value( "24" );
 	num.parse_value( "22" );
+
+	assertpp( num.set() ).t();
+	assertpp( num.error() ).f();
+	assertpp( num.size() ) == 3;
 
 	assertpp( num.value() ) == 50;
 	assertpp( num.last_value() ) == 22;
