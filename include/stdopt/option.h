@@ -160,12 +160,12 @@ public:
 	 * Check if this option was set _correctly_ in the configuration file.
 	 * It returns false if there was an error.
 	 */
-	virtual bool set() const;
+	virtual bool set() const { return m_set; }
 
 	/**
 	 * Check if this option was set incorrectly in the configuration file.
 	 */
-	virtual bool error() const;
+	virtual bool error() const { return m_error; }
 
 	/**
 	 * Get the value set.  If the value is set multiple times
@@ -181,7 +181,7 @@ public:
 	/**
 	 * Get the number of values set for this option.
 	 */
-	int size() const;
+	int size() const { return m_values.size(); }
 	/**
 	 * Get the ith value set for this option.
 	 */
