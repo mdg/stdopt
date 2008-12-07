@@ -16,7 +16,7 @@ $(LIB_NAME) : compile
 compile : obj/configuration.o obj/option.o obj/usage.o
 
 clean :
-	rm -f obj/*.o obj/test/*.o
+	rm -rf obj
 
 clobber : clean
 	rm -f $(LIB_NAME)
