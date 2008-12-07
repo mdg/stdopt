@@ -54,7 +54,7 @@ public:
 	/**
 	 * Get the character flag for this option.
 	 */
-	virtual char option_character() const = 0;
+	virtual char usage_character() const = 0;
 	/**
 	 * Get the longer name for this option.
 	 */

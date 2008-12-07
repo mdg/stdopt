@@ -40,7 +40,7 @@ public:
 	: option_value_c< T >()
 	, m_option_name( name )
 	, m_description( desc )
-	, m_option_char( short_opt )
+	, m_usage_char( short_opt )
 	{}
 
 	/**
@@ -52,14 +52,14 @@ public:
 	: option_value_c< T >( default_value )
 	, m_option_name( name )
 	, m_description( desc )
-	, m_option_char( short_opt )
+	, m_usage_char( short_opt )
 	{}
 
 
 	/**
 	 * Get the character value for this option.
 	 */
-	virtual char option_character() const { return m_option_char; }
+	virtual char usage_character() const { return m_usage_char; }
 	/**
 	 * Get the name of this option.
 	 */
@@ -88,7 +88,7 @@ private:
 	std::string m_option_name;
 	std::string m_description;
 
-	char m_option_char;
+	char m_usage_char;
 };
 
 
