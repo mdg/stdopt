@@ -125,18 +125,37 @@ template < typename T >
 class option_value_c
 : virtual public option_value_i
 {
-public:
-	typedef typename std::vector< T >::const_iterator iterator;
 private:
 	/**
 	 * The internal type for storing values set by command line or
 	 * configuration file.
 	 */
 	typedef std::vector< T > value_list;
+public:
+	/**
+	 * The iterator class for iterating over values set for a given
+	 * option.  Values are read-only for client code.
+	 */
+	typedef typename value_list::const_iterator iterator;
 
 public:
-	option_value_c();
-	option_value_c( const T &default_value );
+	/**
+	 * Construct an option value with _no_ default value.
+	 */
+	option_value_c()
+	: m_values()
+	, m_set( false )
+	, m_error( false )
+	{}
+
+	/**
+	 * Construct an option value with a default value.
+	 */
+	option_value_c( const T &default_value )
+	: m_values()
+	, m_set( false )
+	, m_error( false )
+	{}
 
 	/**
 	 * Check if this option was set _correctly_ in the configuration file.
@@ -160,7 +179,13 @@ public:
 	 */
 	const T & last_value() const;
 
-	int num_values() const;
+	/**
+	 * Get the number of values set for this option.
+	 */
+	int size() const;
+	/**
+	 * Get the ith value set for this option.
+	 */
 	const T & value( int i ) const;
 
 	/**
