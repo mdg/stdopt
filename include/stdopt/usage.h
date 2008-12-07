@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+#include <stdopt/option.h>
 #include <list>
 #include <string>
 
@@ -22,87 +23,72 @@ namespace stdopt {
 
 
 /**
- * An option class for command line usage.
+ * An option that can be set on the command line.
  */
+template < typename T >
 class usage_option_c
+: public option_value_c< T >
+, virtual public usage_option_i
 {
 public:
 	/**
-	 * List of usage option objects.
+	 * Construct the config option.  The name is the key in the
+	 * configuration file.
 	 */
-	typedef std::list< usage_option_c * > list;
-	typedef std::list< usage_option_c * >::iterator list_iterator;
-	typedef std::list< usage_option_c * >::const_iterator
-		const_list_iterator;
-
-public:
-	/**
-	 * Construct an option with the given modes of selection.
-	 */
-	usage_option_c( bool param_expected, char short_opt
-			, const std::string &long_option
-			, const std::string &description );
+	usage_option_c( char short_opt, const std::string &name
+			, const std::string &desc )
+	: option_value_c< T >()
+	, m_option_name( name )
+	, m_description( desc )
+	, m_option_char( short_opt )
+	{}
 
 	/**
-	 * Check if a param is expected for this option.
+	 * Construct the config option with a default value.  The name
+	 * is the key in the configuration file.
 	 */
-	bool param_expected() const { return m_param_expected; }
-	/**
-	 * Get the short style option string
-	 */
-	char short_opt() const { return m_short_opt; }
-	/**
-	 * Get the long style option string
-	 */
-	const std::string & long_opt() const { return m_long_opt; }
-	/**
-	 * Get the description of this option.
-	 */
-	const std::string & description() const { return m_description; }
+	usage_option_c( const T &default_value, char short_opt
+			, const std::string &name, const std::string &desc )
+	: option_value_c< T >( default_value )
+	, m_option_name( name )
+	, m_description( desc )
+	, m_option_char( short_opt )
+	{}
 
 
 	/**
-	 * Set this option without a parameter.
+	 * Get the character value for this option.
 	 */
-	void set();
+	virtual char option_character() const { return m_option_char; }
 	/**
-	 * Set this option w/ the given parameter.
+	 * Get the name of this option.
 	 */
-	void set( const std::string &param );
-
-
+	virtual const std::string & option_name() const
+	{
+		return m_option_name;
+	}
 	/**
-	 * Check if this option was set at the command line.
+	 * Get the description for this option.
 	 */
-	bool is_set() const { return m_set; }
-	/**
-	 * Check if this option was set with a parameter.
-	 */
-	bool has_param() const { return ! m_param.empty(); }
-	/**
-	 * Get the parameter for this option.
-	 */
-	const std::string & param() const { return m_param; }
-
+	virtual const std::string & description() const
+	{
+		return m_description;
+	}
 
 	/**
-	 * Build a line of text documenting this option.
+	 * Check if this option requires a parameter.  The implementation
+	 * is that bool will not require a param, everything else will.
 	 */
-	void write_usage_doc( std::ostream & ) const;
-	/**
-	 * Check if there was a usage error for this option.
-	 */
-	bool usage_error() const { return m_usage_error; }
+	virtual bool requires_param() const
+	{
+		return usage_option_i::type_requires_param< T >();
+	}
 
 private:
-	bool m_param_expected;
-	char m_short_opt;
-	std::string m_long_opt;
+	std::string m_option_name;
 	std::string m_description;
 
-	bool m_set;
-	bool m_usage_error;
-	std::string m_param;
+	char m_option_char;
 };
 
 
