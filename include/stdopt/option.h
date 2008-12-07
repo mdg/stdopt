@@ -171,12 +171,19 @@ public:
 	 * Get the value set.  If the value is set multiple times
 	 * this will return the first value.
 	 */
-	const T & value() const;
+	const T & value() const
+	{
+		return m_values.front();
+	}
+
 	/**
 	 * If the value is set multiple times, this will return the
 	 * most recently set value.
 	 */
-	const T & last_value() const;
+	const T & last_value() const
+	{
+		return m_values.back();
+	}
 
 	/**
 	 * Get the number of values set for this option.
@@ -185,7 +192,7 @@ public:
 	/**
 	 * Get the ith value set for this option.
 	 */
-	const T & value( int i ) const;
+	const T & value( int i ) const { return m_values[ i ]; }
 
 	/**
 	 * Get the begin iterator for the list of values on this option.
