@@ -52,15 +52,28 @@ class usage_option_i
 : virtual public option_value_i
 {
 public:
+	/**
+	 * Get the character flag for this option.
+	 */
 	virtual char option_character() const = 0;
+	/**
+	 * Get the longer name for this option.
+	 */
 	virtual const std::string & option_name() const = 0;
+	/**
+	 * Get the description for this option.
+	 */
 	virtual const std::string & description() const = 0;
 
+	/**
+	 * Check if this usage option requires a parameter.
+	 */
 	virtual bool requires_param() const = 0;
 
 
 	/**
 	 * Check if an option type takes a parameter.
+	 * Most types require a parameter.
 	 */
 	template < typename T >
 	static bool type_requires_param()
@@ -69,6 +82,10 @@ public:
 	}
 };
 
+/**
+ * Declare the type required function for the boolean type.
+ * This is the only type that doesn't require a parameter.
+ */
 template <>
 bool usage_option_i::type_requires_param< bool >();
 
@@ -127,16 +144,18 @@ public:
 	const T & value( int i ) const;
 
 	/**
-	 * Get the begin iterator for the list of values.
+	 * Get the begin iterator for the list of values on this option.
 	 */
 	iterator begin() const { return m_values.begin(); }
 	/**
-	 * Get the end iterator for the list of values.
+	 * Get the end iterator for the list of values on this option.
 	 */
 	iterator end() const { return m_values.end(); }
 
 	/**
-	 * Virtual parser
+	 * Implementation of parsing the string value into the templated
+	 * type.  The templated type just needs an implementation of
+	 *   istream >> T
 	 */
 	virtual bool parse_value( const std::string &str_value )
 	{
@@ -194,6 +213,9 @@ public:
 	{}
 
 
+	/**
+	 * Get the character value for this option.
+	 */
 	virtual char option_character() const { return m_option_char; }
 	/**
 	 * Get the name of this option.
@@ -259,9 +281,19 @@ public:
 	, m_config_required( false )
 	{}
 
+	/**
+	 * Get the name for this option.
+	 */
 	virtual const std::string & option_name() const { return m_option_name; }
+
+	/**
+	 * Get the description documentation for this option.
+	 */
 	virtual const std::string & description() const { return m_description; }
 
+	/**
+	 * Check if it's required that this value be set in the configuration.
+	 */
 	virtual bool config_required() const { return m_config_required; }
 
 private:
