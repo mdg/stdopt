@@ -19,6 +19,7 @@
 using namespace stdopt;
 
 
+// USAGE_OPTION_I
 /**
  * Assert that the type_requires_param() function returns the right
  * response in all necessary cases.
@@ -28,5 +29,19 @@ TESTPP( test_type_requires_param )
 	assertpp( usage_option_i::type_requires_param< bool >() ).f();
 	assertpp( usage_option_i::type_requires_param< int >() ).t();
 	assertpp( usage_option_i::type_requires_param< std::string >() ).t();
+}
+
+
+// OPTION_VALUE_C
+/**
+ * Test that the option_value_c constructor sets the values correctly.
+ */
+TESTPP( test_option_value_constructor )
+{
+	option_value_c< int > value;
+
+	assertpp( value.set() ).f();
+	assertpp( value.error() ).f();
+	assertpp( value.size() ) == 0;
 }
 
