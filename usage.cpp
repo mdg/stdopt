@@ -73,7 +73,7 @@ void usage_option_c::write_usage_doc( std::ostream &doc ) const
 
 
 
-void usage_c::add( usage_option_c &option )
+void usage_c::add( usage_option_i &option )
 {
 	m_option.push_back( &option );
 }
@@ -91,7 +91,7 @@ bool usage_c::parse_args( int argc, const char **argv )
 			return false;
 		}
 
-		usage_option_c *option;
+		usage_option_i *option;
 		if ( argv[i][0] == '-' && argv[i][1] == '-' ) {
 			// long option
 			option = find_long_option( argv[i] + 2 );
@@ -112,7 +112,7 @@ bool usage_c::parse_args( int argc, const char **argv )
 			// parameter
 			// not yet supported.  ignore for now.
 		}
-		std::list< usage_option_c * >::iterator it;
+		option_list::iterator it;
 		for ( it=m_option.begin(); it!=m_option.end(); ++it ) { 
 		}
 	}
@@ -120,24 +120,24 @@ bool usage_c::parse_args( int argc, const char **argv )
 	return true;
 }
 
-usage_option_c * usage_c::find_short_option( char short_opt )
+usage_option_i * usage_c::find_short_option( char short_opt )
 {
-	usage_option_c::list::iterator it;
+	option_list::iterator it;
 	for ( it=m_option.begin(); it!=m_option.end(); ++it ) {
-		usage_option_c &opt( **it );
-		if ( opt.short_opt() == short_opt ) {
+		usage_option_i &opt( **it );
+		if ( opt.usage_character() == short_opt ) {
 			return &opt;
 		}
 	}
 	return NULL;
 }
 
-usage_option_c * usage_c::find_long_option( const std::string &long_opt )
+usage_option_i * usage_c::find_long_option( const std::string &long_opt )
 {
-	usage_option_c::list::iterator it;
+	option_list::iterator it;
 	for ( it=m_option.begin(); it!=m_option.end(); ++it ) {
-		usage_option_c &opt( **it );
-		if ( opt.long_opt() == long_opt ) {
+		usage_option_i &opt( **it );
+		if ( opt.option_name() == long_opt ) {
 			return &opt;
 		}
 	}

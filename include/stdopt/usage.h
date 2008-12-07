@@ -98,6 +98,7 @@ private:
 class usage_c
 {
 	friend class usage_doc_c;
+	typedef std::list< usage_option_i * > option_list;
 
 public:
 	/**
@@ -108,7 +109,7 @@ public:
 	/**
 	 * Add a usage option.
 	 */
-	void add( usage_option_c & );
+	void add( usage_option_i & );
 
 	/**
 	 * Parse a given set of args
@@ -120,13 +121,13 @@ private:
 	/**
 	 * search for an option given a short style character
 	 */
-	usage_option_c * find_short_option( char short_opt );
+	usage_option_i * find_short_option( char short_opt );
 	/**
 	 * search for an option given a long style string
 	 */
-	usage_option_c * find_long_option( const std::string &long_opt );
+	usage_option_i * find_long_option( const std::string &long_opt );
 
-	usage_option_c::list m_option;
+	option_list m_option;
 };
 
 
