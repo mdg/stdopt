@@ -16,7 +16,6 @@
  */
 
 #include <sstream>
-#include <map>
 #include <vector>
 
 namespace stdopt {
