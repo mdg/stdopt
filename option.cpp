@@ -13,30 +13,14 @@
  * limitations under the License.
  */
 
-#include <testpp/test.h>
 #include "stdopt/option.h"
 
 using namespace stdopt;
 
 
-/**
- * Assert that the type_requires_param() function returns the right
- * response in all necessary cases.
- */
-TESTPP( test_type_requires_param )
+template <>
+bool usage_option_i::type_requires_param< bool >()
 {
-	assertpp( usage_option_i::type_requires_param< bool >() ).f();
-	assertpp( usage_option_i::type_requires_param< int >() ).t();
-	assertpp( usage_option_i::type_requires_param< std::string >() ).t();
-}
-
-TESTPP( test_option_usage )
-{
-	/*
-	stdopt::option_c< int > ls_files( "ls-files"
-			, "List the files included in this test." );
-	stdopt::config_option_c< int > ls_files( "ls-files"
-			, "List the files included in this test." );
-			*/
+	return false;
 }
 

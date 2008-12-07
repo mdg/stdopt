@@ -63,10 +63,13 @@ public:
 	 * Check if an option type takes a parameter.
 	 */
 	template < typename T >
-	static bool type_requires_param();
+	static bool type_requires_param()
+	{
+		return true;
+	}
 };
 
-template < bool >
+template <>
 bool usage_option_i::type_requires_param< bool >();
 
 
@@ -83,14 +86,6 @@ public:
 	virtual bool config_required() const = 0;
 };
 
-
-TESTPP( test_usage )
-{
-	stdopt::option_c< int > ls_files( "ls-files"
-			, "List the files included in this test." );
-	stdopt::config_option_c< int > ls_files( "ls-files"
-			, "List the files included in this test." );
-}
 
 
 template < typename T >
@@ -180,7 +175,7 @@ public:
 	 */
 	usage_option_c( char short_opt, const std::string &name
 			, const std::string &desc )
-	: option_value_c()
+	: option_value_c< T >()
 	, m_option_name( name )
 	, m_description( desc )
 	, m_option_char( short_opt )
@@ -192,7 +187,7 @@ public:
 	 */
 	usage_option_c( const T &default_value, char short_opt
 			, const std::string &name, const std::string &desc )
-	: option_value_c( default_value )
+	: option_value_c< T >( default_value )
 	, m_option_name( name )
 	, m_description( desc )
 	, m_option_char( short_opt )
@@ -246,7 +241,7 @@ public:
 	 * configuration file.
 	 */
 	config_option_c( const std::string &name, const std::string &desc )
-	: option_value_c()
+	: option_value_c< T >()
 	, m_option_name( name )
 	, m_description( desc )
 	, m_config_required( false )
@@ -258,7 +253,7 @@ public:
 	 */
 	config_option_c( const T &default_value, const std::string &name
 			, const std::string &desc )
-	: option_value_c( default_value )
+	: option_value_c< T >( default_value )
 	, m_option_name( name )
 	, m_description( desc )
 	, m_config_required( false )
