@@ -208,7 +208,7 @@ public:
 			return false;
 
 		std::istringstream input( str_value );
-		T val();
+		T val;
 		input >> val;
 		m_error = input.fail();
 		m_set = ! m_error;
