@@ -97,14 +97,30 @@ class config_option_i
 : virtual public option_value_i
 {
 public:
+	/**
+	 * Get the name of this option.
+	 */
 	virtual const std::string & option_name() const = 0;
+	/**
+	 * Get the description for this option.  Used to describe
+	 * in the docs.
+	 */
 	virtual const std::string & description() const = 0;
 
+	/**
+	 * Check if this options _must_ be set in the configuration file.
+	 */
 	virtual bool config_required() const = 0;
 };
 
 
-
+/**
+ * A templated implementation of the option_value_i interface.
+ * This implements the code for parsing values and setting them
+ * for later retrieval by the client code.
+ * Any type can be used as long as it has a default constructor and supports
+ * the istream >> operator.
+ */
 template < typename T >
 class option_value_c
 : virtual public option_value_i
@@ -112,6 +128,10 @@ class option_value_c
 public:
 	typedef typename std::vector< T >::const_iterator iterator;
 private:
+	/**
+	 * The internal type for storing values set by command line or
+	 * configuration file.
+	 */
 	typedef std::vector< T > value_list;
 
 public:
