@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-#include <stdopt/option.h>
+#include "option.h"
 #include <map>
 
 namespace stdopt {
