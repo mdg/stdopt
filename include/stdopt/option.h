@@ -143,6 +143,8 @@ public:
 	 */
 	option_value_c()
 	: m_values()
+	, m_default()
+	, m_default_set( false )
 	, m_set( false )
 	, m_error( false )
 	{}
@@ -152,6 +154,8 @@ public:
 	 */
 	option_value_c( const T &default_value )
 	: m_values()
+	, m_default( default_value )
+	, m_default_set( true )
 	, m_set( false )
 	, m_error( false )
 	{}
@@ -160,7 +164,10 @@ public:
 	 * Check if this option was set _correctly_ in the configuration file.
 	 * It returns false if there was an error.
 	 */
-	virtual bool set() const { return m_set && ! m_error; }
+	virtual bool set() const
+	{
+		return m_set && ! m_error;
+	}
 
 	/**
 	 * Check if this option was set incorrectly in the configuration file.
@@ -173,6 +180,11 @@ public:
 	 */
 	const T & value() const
 	{
+		if ( ! m_set ) {
+			// return default even if it's not set
+			// to avoid seg faults
+			return m_default;
+		}
 		return m_values.front();
 	}
 
@@ -182,6 +194,11 @@ public:
 	 */
 	const T & last_value() const
 	{
+		if ( ! m_set ) {
+			// return default even if it's not set
+			// to avoid seg faults
+			return m_default;
+		}
 		return m_values.back();
 	}
 
@@ -219,13 +236,15 @@ public:
 		T val;
 		input >> val;
 		m_error = input.fail();
-		m_set = ! m_error;
+		m_set = true;
 		m_values.push_back( val );
 		return ! m_error;
 	}
 
 private:
 	value_list m_values;
+	const T m_default;
+	const bool m_default_set;
 	bool m_set;
 	bool m_error;
 };

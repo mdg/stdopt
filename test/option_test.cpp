@@ -43,6 +43,21 @@ TESTPP( test_option_value_constructor )
 	assertpp( value.set() ).f();
 	assertpp( value.error() ).f();
 	assertpp( value.size() ) == 0;
+	assertpp( value.value() ) == 0;
+}
+
+/**
+ * Test that the option_value_c constructor sets the values correctly
+ * when given a default value.
+ */
+TESTPP( test_option_value_constructor_with_default )
+{
+	option_value_c< int > num( 4 );
+
+	assertpp( num.set() ).f();
+	assertpp( num.error() ).f();
+	assertpp( num.size() ) == 0;
+	assertpp( num.value() ) == 4;
 }
 
 /**

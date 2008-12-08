@@ -48,7 +48,7 @@ TESTPP( test_config_option_default_init )
 	// assert preconditions
 	assertpp( opt.option_name() ) == "dog";
 	assertpp( opt.value() ) == 58;
-	assertpp( opt.set() ).t();
+	assertpp( opt.set() ).f();
 	assertpp( opt.error() ).f();
 }
 
