@@ -58,8 +58,8 @@ TESTPP( test_config_option_default_init )
  */
 TESTPP( test_string_config_option )
 {
-	config_option_c< std::string > opt( "dog" );
-	opt.parse( "cat" );
+	config_option_c< std::string > opt( "dog", "description" );
+	opt.parse_value( "cat" );
 
 	// assert postconditions
 	assertpp( opt.value() ) == "cat";
@@ -72,8 +72,8 @@ TESTPP( test_string_config_option )
  */
 TESTPP( test_int_config_option )
 {
-	config_option_c< int > opt( "dog" );
-	opt.parse( "89" );
+	config_option_c< int > opt( "dog", "description" );
+	opt.parse_value( "89" );
 
 	// assert postconditions
 	assertpp( opt.value() ) == 89;
