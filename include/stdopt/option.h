@@ -233,11 +233,13 @@ public:
 			return false;
 
 		std::istringstream input( str_value );
-		T val;
+		T val( m_default );
 		input >> val;
 		m_error = input.fail();
-		m_set = true;
-		m_values.push_back( val );
+		if ( ! m_error ) {
+			m_set = true;
+			m_values.push_back( val );
+		}
 		return ! m_error;
 	}
 

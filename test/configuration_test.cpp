@@ -101,8 +101,8 @@ TESTPP( test_bool_config_option )
  */
 TESTPP( test_invalid_int_option )
 {
-	config_option_c< int > opt( "dog" );
-	opt.parse( "cat" );
+	config_option_c< int > opt( "dog", "description" );
+	opt.parse_value( "cat" );
 
 	// assert postconditions
 	assertpp( opt.error() ).t();
