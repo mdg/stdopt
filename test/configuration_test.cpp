@@ -114,26 +114,25 @@ TESTPP( test_invalid_int_option )
 /// Tests for the config_option_list_c class
 
 /**
- * Test that the config_option_list_c class accepts multiple items.
+ * Test that the config_option_c class accepts multiple items.
  */
-TESTPP( test_option_list )
+TESTPP( test_option_parse_multi_values )
 {
-	config_option_list_c< int > ports( "port" );
-	ports.parse( "5" );
-	ports.parse( "6" );
-	ports.parse( "7" );
-	ports.parse( "8" );
+	config_option_c< int > ports( "port", "description" );
+	ports.parse_value( "5" );
+	ports.parse_value( "6" );
+	ports.parse_value( "7" );
+	ports.parse_value( "8" );
 
 	// verify the array access
 	assertpp( ports.size() ) == 4;
-	int i( 0 );
-	assertpp( ports[ i++ ] ) == 5;
-	assertpp( ports[ i++ ] ) == 6;
-	assertpp( ports[ i++ ] ) == 7;
-	assertpp( ports[ i++ ] ) == 8;
+	assertpp( ports.value( 0 ) ) == 5;
+	assertpp( ports.value( 1 ) ) == 6;
+	assertpp( ports.value( 2 ) ) == 7;
+	assertpp( ports.value( 3 ) ) == 8;
 
 	// verify the iterator access
-	config_option_list_c< int >::iterator it( ports.begin() );
+	config_option_c< int >::iterator it( ports.begin() );
 	assertpp( *(it++) ) == 5;
 	assertpp( *(it++) ) == 6;
 	assertpp( *(it++) ) == 7;
