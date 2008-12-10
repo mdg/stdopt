@@ -194,9 +194,9 @@ TESTPP( test_int_options )
 /**
  * Test that option_lists are parsed properly
  */
-TESTPP( test_parse_option_list )
+TESTPP( test_parse_config_list )
 {
-	config_option_list_c< int > ports( "port" );
+	config_option_c< int > ports( "port", "desc" );
 	std::istringstream input( "port=4000\nport=2000\nport=4001" );
 
 	configuration_c config;
@@ -207,9 +207,11 @@ TESTPP( test_parse_option_list )
 	assertpp( ports.error() ).f();
 
 	assertpp( ports.size() ) == 3;
-	assertpp( ports[ 0 ] ) == 4000;
-	assertpp( ports[ 1 ] ) == 2000;
-	assertpp( ports[ 2 ] ) == 4001;
+	assertpp( ports.value() ) == 4000;
+	assertpp( ports.value( 0 ) ) == 4000;
+	assertpp( ports.value( 1 ) ) == 2000;
+	assertpp( ports.value( 2 ) ) == 4001;
+	assertpp( ports.last_value() ) == 4001;
 }
 
 
