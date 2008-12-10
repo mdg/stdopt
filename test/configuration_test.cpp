@@ -147,9 +147,9 @@ TESTPP( test_option_parse_multi_values )
  */
 TESTPP( test_basic_string_options )
 {
-	config_option_c< std::string > option1( "option1" );
-	config_option_c< std::string > option2( "option2" );
-	config_option_c< std::string > option3( "option3" );
+	config_option_c< std::string > option1( "option1", "desc1" );
+	config_option_c< std::string > option2( "option2", "desc2" );
+	config_option_c< std::string > option3( "option3", "desc3" );
 
 	configuration_c config;
 	config.add( option1 );
@@ -171,9 +171,9 @@ TESTPP( test_basic_string_options )
  */
 TESTPP( test_int_options )
 {
-	config_option_c< int > port( "port" );
-	config_option_c< int > timeout( "timeout" );
-	config_option_c< bool > debug( "debug" );
+	config_option_c< int > port( "port", "pdesc" );
+	config_option_c< int > timeout( "timeout", "todesc" );
+	config_option_c< bool > debug( "debug", "debug desc" );
 	std::istringstream input( "port=4000\ntimeout=20\ndebug=1" );
 
 	configuration_c config;
