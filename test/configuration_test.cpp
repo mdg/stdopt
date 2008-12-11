@@ -220,8 +220,8 @@ TESTPP( test_parse_config_list )
  */
 TESTPP( test_crlf )
 {
-	config_option_c< int > timeout( "session-timeout" );
-	config_option_c< std::string > split( "split" );
+	config_option_c< int > timeout( "session-timeout", "desc" );
+	config_option_c< std::string > split( "split", "desc" );
 
 	const char str_input[] =
 		"session-timeout=30\r\n"
@@ -245,8 +245,8 @@ TESTPP( test_crlf )
  */
 TESTPP( test_whitespace )
 {
-	config_option_list_c< int > timeouts( "session-timeout" );
-	config_option_list_c< int > ports( "port" );
+	config_option_c< int > timeouts( "session-timeout", "desc1" );
+	config_option_c< int > ports( "port", "desc2" );
 	const char str_input[] = "\nsession-timeout = 20  \n" \
 				  "\n session-timeout  = 23 \n "\
 				  "\n port = 9000\n" \
@@ -258,16 +258,14 @@ TESTPP( test_whitespace )
 	config.add( ports );
 	config.parse( input );
 
-	int i( 0 );
 	assertpp( timeouts.size() ) == 2;
 	assertpp( ports.size() ) == 2;
 
-	assertpp( timeouts[ i++ ] ) == 20;
-	assertpp( timeouts[ i++ ] ) == 23;
+	assertpp( timeouts.value( 0 ) ) == 20;
+	assertpp( timeouts.value( 1 ) ) == 23;
 
-	i = 0;
-	assertpp( ports[ i++ ] ) == 9000;
-	assertpp( ports[ i++ ] ) == 9001;
+	assertpp( ports.value( 0 ) ) == 9000;
+	assertpp( ports.value( 1 ) ) == 9001;
 }
 
 
@@ -277,7 +275,7 @@ TESTPP( test_whitespace )
  */
 TESTPP( test_non_integer )
 {
-	config_option_c< int > timeout( "session-timeout" );
+	config_option_c< int > timeout( "session-timeout", "desc" );
 	const char str_input[] = "session-timeout=hh340\n";
 	std::stringstream input( str_input );
 
