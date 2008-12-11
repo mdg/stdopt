@@ -87,8 +87,8 @@ TESTPP( test_int_config_option )
  */
 TESTPP( test_bool_config_option )
 {
-	config_option_c< bool > opt( "dog" );
-	opt.parse( "1" );
+	config_option_c< bool > opt( "dog", "desc" );
+	opt.parse_value( "1" );
 
 	// assert postconditions
 	assertpp( opt.value() ).t();

@@ -130,12 +130,15 @@ private:
 	 * configuration file.
 	 */
 	typedef std::vector< T > value_list;
+
 public:
 	/**
 	 * The iterator class for iterating over values set for a given
 	 * option.  Values are read-only for client code.
 	 */
 	typedef typename value_list::const_iterator iterator;
+	typedef typename value_list::reference reference;
+	typedef typename value_list::const_reference const_reference;
 
 public:
 	/**
@@ -152,7 +155,7 @@ public:
 	/**
 	 * Construct an option value with a default value.
 	 */
-	option_value_c( const T &default_value )
+	option_value_c( const_reference default_value )
 	: m_values()
 	, m_default( default_value )
 	, m_default_set( true )
@@ -178,7 +181,7 @@ public:
 	 * Get the value set.  If the value is set multiple times
 	 * this will return the first value.
 	 */
-	const T & value() const
+	const_reference value() const
 	{
 		if ( ! m_set ) {
 			// return default even if it's not set
@@ -192,7 +195,7 @@ public:
 	 * If the value is set multiple times, this will return the
 	 * most recently set value.
 	 */
-	const T & last_value() const
+	const_reference last_value() const
 	{
 		if ( ! m_set ) {
 			// return default even if it's not set
@@ -210,7 +213,7 @@ public:
 	/**
 	 * Get the ith value set for this option.
 	 */
-	const T & value( int i ) const { return m_values[ i ]; }
+	const_reference value( int i ) const { return m_values[ i ]; }
 
 	/**
 	 * Get the begin iterator for the list of values on this option.
