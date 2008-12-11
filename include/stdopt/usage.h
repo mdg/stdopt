@@ -36,7 +36,7 @@ public:
 	 * configuration file.
 	 */
 	usage_option_c( char short_opt, const std::string &name
-			, const std::string &desc )
+			, const std::string &desc = std::string() )
 	: option_value_c< T >()
 	, m_option_name( name )
 	, m_description( desc )
@@ -48,7 +48,8 @@ public:
 	 * is the key in the configuration file.
 	 */
 	usage_option_c( const T &default_value, char short_opt
-			, const std::string &name, const std::string &desc )
+			, const std::string &name
+			, const std::string &desc = std::string() )
 	: option_value_c< T >( default_value )
 	, m_option_name( name )
 	, m_description( desc )
