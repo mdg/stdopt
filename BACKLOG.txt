@@ -1,10 +1,9 @@
 
-unify the option and option value types
-
-set the usage_option_c and maybe config_option_c to allow blank descriptions
-	--help is one example that doesn't need a description.
+fix boolean usage to set even without a value.
 
 update the docs to match unification.
+
+implement automatic online documentation
 
 set a way to run add 2 boolean usage options that share a value and toggle
 	it in opposite directions
