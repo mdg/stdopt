@@ -1,9 +1,11 @@
 
 update the docs to match unification.
 
-implement automatic online documentation
-
 make string options parse quoted strings correctly
+
+make usage accept positional params that aren't flagged
+
+implement automatic online documentation
 
 set a way to run add 2 boolean usage options that share a value and toggle
 	it in opposite directions
