@@ -1,6 +1,4 @@
 
-fix boolean usage to set even without a value.
-
 update the docs to match unification.
 
 implement automatic online documentation
