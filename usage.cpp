@@ -61,6 +61,7 @@ bool usage_c::parse_args( int argc, const char **argv )
 		}
 
 		usage_option_i *option = 0;
+		bool ate_arg( false );
 		if ( argv[i][0] == '-' && argv[i][1] == '-' ) {
 			// long option
 			option = find_long_option( argv[i] + 2 );
@@ -68,6 +69,7 @@ bool usage_c::parse_args( int argc, const char **argv )
 				// this option is not found
 				return false;
 			}
+			option->parse_value( "" );
 		} else if ( argv[i][0] == '-' && argv[i][2] == '\0' ) {
 			// short option
 			option = find_short_option( argv[i][1] );
@@ -75,18 +77,15 @@ bool usage_c::parse_args( int argc, const char **argv )
 				// this option is not found
 				return false;
 			}
+			std::string short_param;
+			if ( option->requires_param() ) {
+				short_param = argv[i+1];
+				ate_arg = true;
+			}
+			option->parse_value( short_param );
 		} else {
 			// parameter
 			// not yet supported.  ignore for now.
-		}
-
-		if ( option ) {
-			if ( option->requires_param() ) {
-				++i;
-				option->parse_value( argv[i] );
-			} else {
-				option->parse_value( "1" );
-			}
 		}
 
 		// what was this going to be?
