@@ -139,6 +139,26 @@ TESTPP( test_attached_short_bool_options )
 	assertpp( special.value() ).t();
 }
 
+/**
+ * Test multiple short options attached and with a parameter.
+ */
+TESTPP( test_attached_short_options_with_param )
+{
+	usage_option_c< bool > debug( 'd', "debug" );
+	usage_option_c< std::string > file( 'f', "file" );
+	usage_c usage;
+	usage.add( debug );
+	usage.add( file );
+
+	const char *argv[20] = { "bin", "-df", "my_file.txt", "cmd" };
+	usage.parse_args( 4, argv );
+
+	assertpp( debug.set() ).t();
+	assertpp( file.set() ).t();
+	assertpp( debug.value() ).t();
+	assertpp( file.value() ) == "my_file.txt";
+}
+
 
 /**
  * Test that option document creation works and formats properly.
