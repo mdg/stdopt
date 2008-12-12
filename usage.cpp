@@ -80,12 +80,13 @@ bool usage_c::parse_args( int argc, const char **argv )
 		bool ate_arg( false );
 		if ( argv[i][0] == '-' && argv[i][1] == '-' ) {
 			// long option
-			option = find_long_option( argv[i] + 2 );
+			long_usage_arg_c long_arg( argv[i] + 2 );
+			option = find_long_option( long_arg.name() );
 			if ( ! option ) {
 				// this option is not found
 				return false;
 			}
-			option->parse_value( "" );
+			option->parse_value( long_arg.value() );
 		} else if ( argv[i][0] == '-' && argv[i][2] == '\0' ) {
 			// short option
 			option = find_short_option( argv[i][1] );
