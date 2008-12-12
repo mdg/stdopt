@@ -35,6 +35,7 @@ TESTPP( test_short_usage_bool )
 	usage.parse_args( argc, argv );
 
 	assertpp( debug.set() ).t();
+	assertpp( debug.value() ).t();
 }
 
 /**
@@ -50,8 +51,8 @@ TESTPP( test_long_usage_bool )
 	const char *argv[20] = { "shessiond", "--debug" };
 
 	usage.parse_args( argc, argv );
-
 	assertpp( debug.set() ).t();
+	assertpp( debug.value() ).t();
 }
 
 /**
