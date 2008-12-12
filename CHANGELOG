@@ -1,3 +1,6 @@
+v0.0.1
+Made big changes.  Unified usage & config option types so they can be shared.
+
 v0.0.0
 Initial version.  Hasn't had much done to it to make it a proper library yet.
 
