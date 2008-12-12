@@ -21,9 +21,9 @@ using namespace stdopt;
 
 
 /**
- * Test that the short style command line usage works.
+ * Test that the short style command line usage works with booleans.
  */
-TESTPP( test_short_usage )
+TESTPP( test_short_usage_bool )
 {
 	usage_c usage;
 	usage_option_c< bool > debug( 'g', "debug", "Add debugging logging." );
@@ -40,7 +40,7 @@ TESTPP( test_short_usage )
 /**
  * Test that the long style command line usage works.
  */
-TESTPP( test_long_usage )
+TESTPP( test_long_usage_bool )
 {
 	usage_c usage;
 	usage_option_c< bool > debug( 'g', "debug", "Add debugging options." );
