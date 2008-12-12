@@ -56,6 +56,22 @@ TESTPP( test_long_usage_bool )
 }
 
 /**
+ * Test that the short style usage works for integers
+ */
+TESTPP( test_short_usage_int )
+{
+	usage_option_c< int > depth( 'd', "depth", "Depth of something." );
+	usage_c usage;
+	usage.add( depth );
+
+	const char *argv[20] = { "program", "-d", "5" };
+	usage.parse_args( 3, argv );
+
+	assertpp( depth.set() ).t();
+	assertpp( depth.value() ).t();
+}
+
+/**
  * Test that option document creation works and formats properly.
 TESTPP( test_option_doc )
 {
