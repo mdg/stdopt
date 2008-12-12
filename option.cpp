@@ -24,3 +24,17 @@ bool usage_option_i::type_requires_param< bool >()
 	return false;
 }
 
+template <>
+bool option_value_c< bool >::parse_value( const std::string &str_value )
+{
+	m_values.push_back( true );
+	m_set = true;
+}
+
+template <>
+bool option_value_c< std::string >::parse_value( const std::string &str_value )
+{
+	m_values.push_back( str_value );
+	m_set = true;
+}
+

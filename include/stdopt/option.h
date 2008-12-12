@@ -254,6 +254,12 @@ private:
 	bool m_error;
 };
 
+template <>
+bool option_value_c< bool >::parse_value( const std::string &str_value );
+
+template <>
+bool option_value_c< std::string >::parse_value( const std::string &str_value );
+
 
 /**
  * An option that can be set on command line usage or a configuration file.
