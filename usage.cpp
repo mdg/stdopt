@@ -57,10 +57,10 @@ bool usage_c::parse_args( int argc, const char **argv )
 
 		if ( strlen( argv[i] ) < 2 ) {
 			// no options should be less than 2 in length
-			return false;
+			continue;
 		}
 
-		usage_option_i *option;
+		usage_option_i *option = 0;
 		if ( argv[i][0] == '-' && argv[i][1] == '-' ) {
 			// long option
 			option = find_long_option( argv[i] + 2 );
@@ -68,19 +68,28 @@ bool usage_c::parse_args( int argc, const char **argv )
 				// this option is not found
 				return false;
 			}
-			option->set();
-		} else if ( argv[i][0] == '-' ) {
+		} else if ( argv[i][0] == '-' && argv[i][2] == '\0' ) {
 			// short option
 			option = find_short_option( argv[i][1] );
 			if ( ! option ) {
 				// this option is not found
 				return false;
 			}
-			option->set();
 		} else {
 			// parameter
 			// not yet supported.  ignore for now.
 		}
+
+		if ( option ) {
+			if ( option->requires_param() ) {
+				++i;
+				option->parse_value( argv[i] );
+			} else {
+				option->parse_value( "1" );
+			}
+		}
+
+		// what was this going to be?
 		option_list::iterator it;
 		for ( it=m_option.begin(); it!=m_option.end(); ++it ) { 
 		}
