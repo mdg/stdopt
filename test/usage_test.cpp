@@ -21,6 +21,29 @@ using namespace stdopt;
 
 
 /**
+ * Test that the long arg class parses the name & no value correctly.
+ */
+TESTPP( test_long_arg_no_param )
+{
+	long_usage_arg_c arg( "debug" );
+	assertpp( arg.name() ) == "debug";
+	assertpp( arg.has_value() ) == false;
+	assertpp( arg.value() ) == "";
+}
+
+/**
+ * Test that the long arg class parses the name & value correctly.
+ */
+TESTPP( test_long_arg_with_param )
+{
+	long_usage_arg_c arg( "include=value" );
+	assertpp( arg.name() ) == "include";
+	assertpp( arg.has_value() ) == true;
+	assertpp( arg.value() ) == "value";
+}
+
+
+/**
  * Test that the short style command line usage works with booleans.
  */
 TESTPP( test_short_usage_bool )

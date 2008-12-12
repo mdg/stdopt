@@ -41,6 +41,22 @@ void usage_option_c::write_usage_doc( std::ostream &doc ) const
 */
 
 
+long_usage_arg_c::long_usage_arg_c( const std::string &arg )
+: m_name()
+, m_value()
+, m_has_value( false )
+{
+	std::size_t equal_pos( arg.find( "=" ) );
+	if ( equal_pos == std::string::npos ) {
+		m_name = arg;
+	} else {
+		m_name = arg.substr( 0, equal_pos );
+		m_value = arg.substr( equal_pos + 1 );
+		m_has_value = true;
+	}
+}
+
+
 
 void usage_c::add( usage_option_i &option )
 {
