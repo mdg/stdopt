@@ -87,6 +87,58 @@ TESTPP( test_long_usage_int )
 	assertpp( depth.value() ).t();
 }
 
+/**
+ * Test multiple word for short usage
+ */
+TESTPP( test_short_usage_quoted_string )
+{
+	usage_option_c< std::string > include( 'i', "include", "Include x" );
+	usage_c usage;
+	usage.add( include );
+
+	const char *argv[20] = { "bin", "-i", "string value" };
+	usage.parse_args( 3, argv );
+
+	assertpp( include.set() ).t();
+	assertpp( include.value() ) == "string value";
+}
+
+/**
+ * Test multiple word long usage
+ */
+TESTPP( test_long_usage_quoted_string )
+{
+	usage_option_c< std::string > include( 'i', "include", "Include x" );
+	usage_c usage;
+	usage.add( include );
+
+	const char *argv[20] = { "bin", "--include=string value" };
+	usage.parse_args( 2, argv );
+
+	assertpp( include.set() ).t();
+	assertpp( include.value() ) == "string value";
+}
+
+/**
+ * Test multiple short options attached.
+ */
+TESTPP( test_attached_short_bool_options )
+{
+	usage_option_c< bool > debug( 'd', "debug", "Debug" );
+	usage_option_c< bool > special( 's', "special", "Special" );
+	usage_c usage;
+	usage.add( debug );
+	usage.add( special );
+
+	const char *argv[20] = { "bin", "-ds" };
+	usage.parse_args( 2, argv );
+
+	assertpp( debug.set() ).t();
+	assertpp( special.set() ).t();
+	assertpp( debug.value() ).t();
+	assertpp( special.value() ).t();
+}
+
 
 /**
  * Test that option document creation works and formats properly.
