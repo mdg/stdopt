@@ -1,6 +1,6 @@
 CC = g++
 DBG = -g
-LIB_NAME = liboptionpp.a
+LIB_NAME = libstdopt.a
 
 INC_OPT = -Iinclude
 SRC = *.h *.cpp
