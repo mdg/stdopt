@@ -94,31 +94,14 @@ private:
 
 
 /**
- * A utility class for parsing long-style arguments.
+ * A utility class for parsing short-style arguments.
  */
-class long_usage_arg_c
+class short_style_arg_c
 {
 public:
-	long_usage_arg_c( const std::string &arg );
-
-	/**
-	 * Get the name of the argument.
-	 */
-	const std::string & name() const { return m_name; }
-	/**
-	 * Check if this argument had a value passed.
-	 */
-	bool has_value() const { return m_has_value; }
-	/**
-	 * Get the value of the argument.  This may be empty.
-	 */
-	const std::string & value() const { return m_value; }
-
-private:
-	std::string m_name;
-	std::string m_value;
-	bool m_has_value;
+	short_style_arg_c( const std::string &arg );
 };
+
 
 /**
  * An argument parser class
@@ -146,6 +129,13 @@ public:
 	bool parse_args( int argc, const char **argv );
 
 private:
+	static bool short_style_arg( const char *arg );
+	static bool long_style_arg( const char *arg );
+
+	void parse_short_args( const std::string &args
+			, const std::string &param, bool &consumed_param );
+	void parse_long_arg( const std::string &arg );
+
 	/**
 	 * search for an option given a short style character
 	 */
@@ -156,6 +146,7 @@ private:
 	usage_option_i * find_long_option( const std::string &long_opt );
 
 	option_list m_option;
+	bool m_error;
 };
 
 

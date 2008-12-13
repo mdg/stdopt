@@ -41,23 +41,6 @@ void usage_option_c::write_usage_doc( std::ostream &doc ) const
 */
 
 
-long_usage_arg_c::long_usage_arg_c( const std::string &arg )
-: m_name()
-, m_value()
-, m_has_value( false )
-{
-	std::size_t equal_pos( arg.find( "=" ) );
-	if ( equal_pos == std::string::npos ) {
-		m_name = arg;
-	} else {
-		m_name = arg.substr( 0, equal_pos );
-		m_value = arg.substr( equal_pos + 1 );
-		m_has_value = true;
-	}
-}
-
-
-
 void usage_c::add( usage_option_i &option )
 {
 	m_option.push_back( &option );
@@ -65,48 +48,98 @@ void usage_c::add( usage_option_i &option )
 
 bool usage_c::parse_args( int argc, const char **argv )
 {
-	bool usage_error( false );
 	// skip the first arg which is the command
 	for ( int i(1); i<argc; ++i ) {
 		// usage_error = usage_error || 
 		// std::cerr << "argv[" << i << "] = " << argv[i] << std::endl;
 
-		usage_option_i *option = 0;
-		bool ate_arg( false );
-		if ( argv[i][0] == '-' && argv[i][1] == '-' ) {
-			// long option
-			long_usage_arg_c long_arg( argv[i] + 2 );
-			option = find_long_option( long_arg.name() );
-			if ( ! option ) {
-				// this option is not found
-				return false;
-			}
-			option->parse_value( long_arg.value() );
-		} else if ( argv[i][0] == '-' && argv[i][2] == '\0' ) {
-			// short option
-			option = find_short_option( argv[i][1] );
-			if ( ! option ) {
-				// this option is not found
-				return false;
-			}
+		bool consumed_param( false );
+		if ( long_style_arg( argv[i] ) ) {
+			parse_long_arg( argv[i] + 2 );
+		} else if ( short_style_arg( argv[i] ) ) {
 			std::string short_param;
-			if ( option->requires_param() ) {
+			if ( i + 1 < argc ) {
 				short_param = argv[i+1];
-				ate_arg = true;
 			}
-			option->parse_value( short_param );
+			parse_short_args( argv[i] + 1, short_param
+					, consumed_param );
 		} else {
-			// parameter
+			// positional arg
 			// not yet supported.  ignore for now.
 		}
 
-		// what was this going to be?
-		option_list::iterator it;
-		for ( it=m_option.begin(); it!=m_option.end(); ++it ) { 
+		if ( consumed_param ) {
+			++i;
 		}
 	}
 
-	return true;
+	return ! m_error;
+}
+
+bool usage_c::short_style_arg( const char *arg )
+{
+	return arg[0] == '-' && arg[1] != '-';
+}
+
+bool usage_c::long_style_arg( const char *arg )
+{
+	return arg[0] == '-' && arg[1] == '-';
+}
+
+void usage_c::parse_short_args( const std::string &args
+		, const std::string &param, bool &consumed_param )
+{
+	std::string::const_iterator it( args.begin() );
+	for ( ; it!=args.end(); ++it ) {
+		// short option
+		usage_option_i *option = find_short_option( *it );
+		if ( ! option ) {
+			// this option is not found
+			// flag as error
+			m_error = true;
+		}
+
+		if ( option->requires_param() ) {
+			if ( ! param.empty() ) {
+				consumed_param = true;
+				option->parse_value( param );
+			} else {
+				m_error = true;
+			}
+		} else {
+			std::string no_param;
+			option->parse_value( no_param );
+		}
+	}
+}
+
+void usage_c::parse_long_arg( const std::string &arg )
+{
+	std::string option_name;
+	std::string option_value;
+	bool has_value;
+
+	std::size_t equal_pos( arg.find( "=" ) );
+	if ( equal_pos == std::string::npos ) {
+		option_name = arg;
+	} else {
+		option_name = arg.substr( 0, equal_pos );
+		option_value = arg.substr( equal_pos + 1 );
+		has_value = true;
+	}
+
+	usage_option_i *option = find_long_option( option_name );
+	if ( ! option ) {
+		m_error = true;
+		return;
+	}
+
+	if ( option->requires_param() && ! has_value ) {
+		m_error = true;
+		return;
+	}
+
+	option->parse_value( option_value );
 }
 
 usage_option_i * usage_c::find_short_option( char short_opt )
