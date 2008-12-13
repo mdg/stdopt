@@ -160,6 +160,7 @@ private:
 
 	void parse_short_args( const std::string &args
 			, const std::string &param, bool &consumed_param );
+	void parse_long_arg( const std::string &arg );
 
 	/**
 	 * search for an option given a short style character

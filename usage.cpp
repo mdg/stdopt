@@ -71,17 +71,9 @@ bool usage_c::parse_args( int argc, const char **argv )
 		// usage_error = usage_error || 
 		// std::cerr << "argv[" << i << "] = " << argv[i] << std::endl;
 
-		usage_option_i *option = 0;
-		bool consumed_param( false );
+		bool consumed_param( 0 );
 		if ( long_style_arg( argv[i] ) ) {
-			// long option
-			long_usage_arg_c long_arg( argv[i] + 2 );
-			option = find_long_option( long_arg.name() );
-			if ( ! option ) {
-				// this option is not found
-				return false;
-			}
-			option->parse_value( long_arg.value() );
+			parse_long_arg( argv[i] );
 		} else if ( short_style_arg( argv[i] ) ) {
 			parse_short_args( argv[i] + 1, argv[i+1]
 					, consumed_param );
@@ -90,9 +82,8 @@ bool usage_c::parse_args( int argc, const char **argv )
 			// not yet supported.  ignore for now.
 		}
 
-		// what was this going to be?
-		option_list::iterator it;
-		for ( it=m_option.begin(); it!=m_option.end(); ++it ) { 
+		if ( consumed_param ) {
+			++i;
 		}
 	}
 
@@ -127,6 +118,35 @@ void usage_c::parse_short_args( const std::string &args
 			option->parse_value( param );
 		}
 	}
+}
+
+void usage_c::parse_long_arg( const std::string &arg )
+{
+	std::string option_name;
+	std::string option_value;
+	bool has_value;
+
+	std::size_t equal_pos( arg.find( "=" ) );
+	if ( equal_pos == std::string::npos ) {
+		option_name = arg;
+	} else {
+		option_name = arg.substr( 0, equal_pos );
+		option_value = arg.substr( equal_pos + 1 );
+		has_value = true;
+	}
+
+	usage_option_i *option = find_long_option( option_name );
+	if ( ! option ) {
+		m_error = true;
+		return;
+	}
+
+	if ( option->requires_param() && ! has_value ) {
+		m_error = true;
+		return;
+	}
+
+	option->parse_value( option_value );
 }
 
 usage_option_i * usage_c::find_short_option( char short_opt )
