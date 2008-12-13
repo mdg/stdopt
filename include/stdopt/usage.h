@@ -1,5 +1,5 @@
-#ifndef USAGE_H
-#define USAGE_H
+#ifndef STDOPT_USAGE_H
+#define STDOPT_USAGE_H
 /**
  * Copyright 2008 Matthew Graham
  * Licensed under the Apache License, Version 2.0 (the "License");
