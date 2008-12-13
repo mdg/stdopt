@@ -71,11 +71,6 @@ bool usage_c::parse_args( int argc, const char **argv )
 		// usage_error = usage_error || 
 		// std::cerr << "argv[" << i << "] = " << argv[i] << std::endl;
 
-		if ( strlen( argv[i] ) < 2 ) {
-			// no options should be less than 2 in length
-			continue;
-		}
-
 		usage_option_i *option = 0;
 		bool ate_arg( false );
 		if ( argv[i][0] == '-' && argv[i][1] == '-' ) {
