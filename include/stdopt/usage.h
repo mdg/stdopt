@@ -102,32 +102,6 @@ public:
 	short_style_arg_c( const std::string &arg );
 };
 
-/**
- * A utility class for parsing long-style arguments.
- */
-class long_usage_arg_c
-{
-public:
-	long_usage_arg_c( const std::string &arg );
-
-	/**
-	 * Get the name of the argument.
-	 */
-	const std::string & name() const { return m_name; }
-	/**
-	 * Check if this argument had a value passed.
-	 */
-	bool has_value() const { return m_has_value; }
-	/**
-	 * Get the value of the argument.  This may be empty.
-	 */
-	const std::string & value() const { return m_value; }
-
-private:
-	std::string m_name;
-	std::string m_value;
-	bool m_has_value;
-};
 
 /**
  * An argument parser class
