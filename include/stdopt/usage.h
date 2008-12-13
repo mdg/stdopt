@@ -99,7 +99,7 @@ private:
 class short_style_arg_c
 {
 public:
-	short_style_arg_c( const std::string &arg )
+	short_style_arg_c( const std::string &arg );
 };
 
 /**
@@ -155,6 +155,12 @@ public:
 	bool parse_args( int argc, const char **argv );
 
 private:
+	static bool short_style_arg( const char *arg );
+	static bool long_style_arg( const char *arg );
+
+	void parse_short_args( const std::string &args
+			, const std::string &param, bool &consumed_param );
+
 	/**
 	 * search for an option given a short style character
 	 */
@@ -165,6 +171,7 @@ private:
 	usage_option_i * find_long_option( const std::string &long_opt );
 
 	option_list m_option;
+	bool m_error;
 };
 
 
