@@ -94,16 +94,6 @@ private:
 
 
 /**
- * A utility class for parsing short-style arguments.
- */
-class short_style_arg_c
-{
-public:
-	short_style_arg_c( const std::string &arg );
-};
-
-
-/**
  * An argument parser class
  */
 class usage_c
