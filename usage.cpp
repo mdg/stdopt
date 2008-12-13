@@ -101,8 +101,15 @@ void usage_c::parse_short_args( const std::string &args
 		}
 
 		if ( option->requires_param() ) {
-			consumed_param = true;
-			option->parse_value( param );
+			if ( ! param.empty() ) {
+				consumed_param = true;
+				option->parse_value( param );
+			} else {
+				m_error = true;
+			}
+		} else {
+			std::string no_param;
+			option->parse_value( no_param );
 		}
 	}
 }
