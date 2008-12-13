@@ -159,6 +159,24 @@ TESTPP( test_attached_short_options_with_param )
 	assertpp( file.value() ) == "my_file.txt";
 }
 
+/**
+ * Test positional arguments
+ */
+TESTPP( test_positional_arg_success )
+{
+	positional_value_c< int > max_value;
+	positional_value_c< std::string > file;
+	usage_c usage;
+	usage.add( max_value );
+	usage.add( file );
+
+	const char *argv[20] = { "bin", "6", "myfile" };
+	usage.parse_args( 3, argv );
+
+	assertpp( max_value.value() ) == 6;
+	assertpp( file.value() ) == "myfile";
+}
+
 
 /**
  * Test that option document creation works and formats properly.

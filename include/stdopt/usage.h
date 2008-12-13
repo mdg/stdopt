@@ -93,6 +93,21 @@ private:
 };
 
 
+template < typename T >
+class positional_value_c
+: public option_value_c< T >
+{
+public:
+	positional_value_c()
+	: option_value_c< T >()
+	{}
+
+	positional_value_c( const T &default_value )
+	: option_value_c< T >( default_value )
+	{}
+};
+
+
 /**
  * An argument parser class
  */
@@ -100,6 +115,7 @@ class usage_c
 {
 	friend class usage_doc_c;
 	typedef std::list< usage_option_i * > option_list;
+	typedef std::list< option_value_i * > positional_list;
 
 public:
 	/**
@@ -111,6 +127,15 @@ public:
 	 * Add a usage option.
 	 */
 	void add( usage_option_i & );
+
+	/**
+	 * Add a positional option.
+	 */
+	template < typename T >
+	void add( positional_value_c< T > &val )
+	{
+		m_positional.push_back( &val );
+	}
 
 	/**
 	 * Parse a given set of args
@@ -136,6 +161,7 @@ private:
 	usage_option_i * find_long_option( const std::string &long_opt );
 
 	option_list m_option;
+	positional_list m_positional;
 	bool m_error;
 };
 
