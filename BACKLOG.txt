@@ -1,9 +1,7 @@
 
-update the docs to match unification.
-
-make string options parse quoted strings correctly
-
 make usage accept positional params that aren't flagged
+
+update the docs to match unification.
 
 implement automatic online documentation
 
