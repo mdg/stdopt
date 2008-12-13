@@ -23,8 +23,7 @@ clobber : clean
 
 install : lib
 	mkdir -p /usr/include/stdopt
-	cp configuration.h /usr/include/stdopt
-	cp usage.h /usr/include/stdopt
+	cp include/stdopt/*.h /usr/include/stdopt
 	cp $(LIB_NAME) /usr/lib
 
 test : compile compile_test
