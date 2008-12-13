@@ -54,7 +54,7 @@ bool usage_c::parse_args( int argc, const char **argv )
 		// usage_error = usage_error || 
 		// std::cerr << "argv[" << i << "] = " << argv[i] << std::endl;
 
-		bool consumed_param( 0 );
+		bool consumed_param( false );
 		if ( long_style_arg( argv[i] ) ) {
 			parse_long_arg( argv[i] );
 		} else if ( short_style_arg( argv[i] ) ) {
