@@ -55,7 +55,7 @@ bool usage_c::parse_args( int argc, const char **argv )
 
 		bool consumed_param( false );
 		if ( long_style_arg( argv[i] ) ) {
-			parse_long_arg( argv[i] );
+			parse_long_arg( argv[i] + 2 );
 		} else if ( short_style_arg( argv[i] ) ) {
 			std::string short_param;
 			if ( i + 1 < argc ) {
