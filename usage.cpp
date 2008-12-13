@@ -48,6 +48,8 @@ void usage_c::add( usage_option_i &option )
 
 bool usage_c::parse_args( int argc, const char **argv )
 {
+	positional_list::iterator pos_it( m_positional.begin() );
+
 	// skip the first arg which is the command
 	for ( int i(1); i<argc; ++i ) {
 		// usage_error = usage_error || 
@@ -65,7 +67,12 @@ bool usage_c::parse_args( int argc, const char **argv )
 					, consumed_param );
 		} else {
 			// positional arg
-			// not yet supported.  ignore for now.
+			if ( pos_it == m_positional.end() ) {
+				m_error = true;
+				continue;
+			}
+			(*pos_it)->parse_value( argv[i] );
+			++pos_it;
 		}
 
 		if ( consumed_param ) {
