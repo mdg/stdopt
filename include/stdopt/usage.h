@@ -143,6 +143,11 @@ public:
 	 */
 	bool parse_args( int argc, const char **argv );
 
+	/**
+	 * Check if there was an error parsing the options.
+	 */
+	bool error() const { return m_error; }
+
 private:
 	static bool short_style_arg( const char *arg );
 	static bool long_style_arg( const char *arg );
