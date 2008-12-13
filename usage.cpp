@@ -58,7 +58,11 @@ bool usage_c::parse_args( int argc, const char **argv )
 		if ( long_style_arg( argv[i] ) ) {
 			parse_long_arg( argv[i] );
 		} else if ( short_style_arg( argv[i] ) ) {
-			parse_short_args( argv[i] + 1, argv[i+1]
+			std::string short_param;
+			if ( i + 1 < argc ) {
+				short_param = argv[i+1];
+			}
+			parse_short_args( argv[i] + 1, short_param
 					, consumed_param );
 		} else {
 			// positional arg
