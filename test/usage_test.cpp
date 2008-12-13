@@ -177,6 +177,35 @@ TESTPP( test_positional_arg_success )
 	assertpp( file.value() ) == "myfile";
 }
 
+/**
+ * Test using long, short & positional together.
+ */
+TESTPP( test_mixed_usage )
+{
+	usage_option_c< bool > external( 'x', "external" );
+	usage_option_c< bool > verbose( 'v', "verbose" );
+	usage_option_c< std::string > output( 'o', "output" );
+	usage_option_c< std::string > format( 'f', "format" );
+	positional_value_c< std::string > test;
+
+	usage_c usage;
+	usage.add( external );
+	usage.add( verbose );
+	usage.add( output );
+	usage.add( format );
+	usage.add( test );
+
+	const char *argv[20] = { "bin", "-xf", "xml", "--output=thursday"
+		, "usage_test.cpp" };
+	usage.parse_args( 5, argv );
+
+	assertpp( external.value() ).t();
+	assertpp( verbose.value() ).f();
+	assertpp( output.value() ) == "thursday";
+	assertpp( format.value() ) == "xml";
+	assertpp( test.value() ) == "usage_test.cpp";
+}
+
 
 /**
  * Test that option document creation works and formats properly.
